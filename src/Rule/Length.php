@@ -66,6 +66,9 @@ class Length extends Rule
      */
     public function validate($value)
     {
+        if ((null === $value) || ('' === $value)) {
+            return true;
+        }
         $value = strlen($value);
         if ($value >= $this->min) {
             return is_int($this->max) ? ($value <= $this->max) : true;

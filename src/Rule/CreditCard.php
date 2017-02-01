@@ -69,6 +69,9 @@ class CreditCard extends Rule
      */
     public function validate($value)
     {
+        if ((null === $value) || ('' === $value)) {
+            return true;
+        }
         if (empty($this->types2)) {
             $types = &$this->types;
         } else {

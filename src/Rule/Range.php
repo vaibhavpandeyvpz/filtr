@@ -58,6 +58,10 @@ class Range extends Rule
      */
     public function validate($value)
     {
+        if (null === $value) {
+            return true;
+        }
+        $value = (int)$value;
         if ($value >= $this->min) {
             return is_int($this->max) ? ($value <= $this->max) : true;
         }

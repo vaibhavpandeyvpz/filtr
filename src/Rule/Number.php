@@ -29,6 +29,9 @@ class Number extends Rule
      */
     public function validate($value)
     {
+        if ((null === $value) || ('' === $value)) {
+            return true;
+        }
         return is_numeric($value);
     }
 }

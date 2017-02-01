@@ -51,6 +51,9 @@ class Count extends Rule
      */
     public function validate($value)
     {
+        if (null === $value) {
+            return true;
+        }
         return $this->number === count($value);
     }
 }

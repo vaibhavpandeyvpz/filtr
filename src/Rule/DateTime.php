@@ -45,6 +45,9 @@ class DateTime extends Rule
      */
     public function validate($value)
     {
+        if ((null === $value) || ('' === $value) || ($value instanceof \DateTime)) {
+            return true;
+        }
         return false !== \DateTime::createFromFormat($this->format, $value);
     }
 }

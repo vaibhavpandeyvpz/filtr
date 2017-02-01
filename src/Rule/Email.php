@@ -29,6 +29,9 @@ class Email extends Rule
      */
     public function validate($value)
     {
+        if ((null === $value) || ('' === $value)) {
+            return true;
+        }
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
 }

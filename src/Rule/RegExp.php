@@ -38,6 +38,9 @@ class RegExp extends Rule
      */
     public function validate($value)
     {
+        if ((null === $value) || ('' === $value)) {
+            return true;
+        }
         return preg_match($this->pattern, $value);
     }
 }
