@@ -48,7 +48,7 @@ See [LICENSE.md][license-url] file.
 [latest-version-url]: https://github.com/vaibhavpandeyvpz/filtr/releases
 [downloads-image]: https://img.shields.io/packagist/dt/vaibhavpandeyvpz/filtr.svg?style=flat-square
 [downloads-url]: https://packagist.org/packages/vaibhavpandeyvpz/filtr
-[php-version-image]: http://img.shields.io/badge/php-5.4+-8892be.svg?style=flat-square
+[php-version-image]: http://img.shields.io/badge/php-5.3+-8892be.svg?style=flat-square
 [php-version-url]: https://packagist.org/packages/vaibhavpandeyvpz/filtr
 [license-image]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [license-url]: LICENSE.md
