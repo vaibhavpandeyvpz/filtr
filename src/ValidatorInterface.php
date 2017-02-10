@@ -33,8 +33,8 @@ interface ValidatorInterface
     public function required($key, $message = 'This value is required.');
 
     /**
-     * @param array $data
+     * @param array|null $data
      * @return ResultInterface
      */
-    public function validate(array $data);
+    public function validate(array $data = null);
 }

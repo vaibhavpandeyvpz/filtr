@@ -51,8 +51,9 @@ class Validator implements ValidatorInterface
     /**
      * {@inheritdoc}
      */
-    public function validate(array $data)
+    public function validate(array $data = null)
     {
+        $data = (array)$data;
         $result = new Result();
         /**
          * @var string $key
