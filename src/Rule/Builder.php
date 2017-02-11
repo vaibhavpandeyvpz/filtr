@@ -166,6 +166,14 @@ class Builder extends Rule
     }
 
     /**
+     * @return static
+     */
+    public function isMacAddress()
+    {
+        return $this->isMatchingWith('~^(?:[a-fA-F0-9]{2}[:-]?){6}$~');
+    }
+
+    /**
      * @param string $regexp
      * @return static
      */

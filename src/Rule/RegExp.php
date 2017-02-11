@@ -41,6 +41,6 @@ class RegExp extends Rule
         if ((null === $value) || ('' === $value)) {
             return true;
         }
-        return preg_match($this->pattern, $value);
+        return preg_match($this->pattern, $value) === 1;
     }
 }

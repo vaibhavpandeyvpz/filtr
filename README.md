@@ -16,7 +16,7 @@ Preview (झलक)
 <?php
 
 $v = new Filtr\Validator();
-$v->required('email')->isEmailAddress();
+$v->required('email')->isNotBlank()->isEmailAddress();
 $v->required('password')->isNotBlank()->isHavingLength(8, 32);
 $v->key('remember_me')->isTrue();
 

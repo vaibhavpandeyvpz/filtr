@@ -350,6 +350,34 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string $subject
+     * @param bool $valid
+     * @dataProvider providesMacAddress
+     */
+    public function testMacAddress($subject, $valid)
+    {
+        $v = new Validator();
+        $v->key('subject')->isMacAddress();
+        $result = $v->validate(array('subject' => $subject));
+        $this->assertEquals($valid, $result->valid());
+    }
+
+    /**
+     * @return array
+     */
+    public function providesMacAddress()
+    {
+        return array(
+            array('00:a0:c9:14:c8:29', true),
+            array('00:A0:C9:14:C8:29', true),
+            array('00-1C-b3-09-85-15', true),
+            array('00-1C-B3-09-85-15', true),
+            array('00:a0:c9:14:c8', false),
+            array('2001:0db8:85a3:08d3:1319:8a2e', false),
+        );
+    }
+
+    /**
      * @param mixed $subject
      * @param bool $valid
      * @dataProvider providesNotBlank
