@@ -30,6 +30,20 @@ class Validator implements ValidatorInterface
     protected $required = array();
 
     /**
+     * @var bool
+     */
+    protected $strict;
+
+    /**
+     * Validator constructor.
+     * @param bool $strict
+     */
+    public function __construct($strict = true)
+    {
+        $this->strict = $strict;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function key($name)
@@ -51,20 +65,28 @@ class Validator implements ValidatorInterface
     /**
      * {@inheritdoc}
      */
-    public function validate(array $data = null)
+    public function validate(array $data = null, $message = 'This value was unexpected.')
     {
         $data = (array)$data;
         $result = new Result();
+        if ($this->strict) {
+            $extras = array_diff_key($data, array_flip(array_keys($this->assertions)));
+            if (!empty($extras)) {
+                foreach ($extras as $key) {
+                    $result->error($key, $message);
+                }
+            }
+        }
         /**
          * @var string $key
          * @var RuleInterface $assertion
          */
         foreach ($this->assertions as $key => $assertion) {
             if (array_key_exists($key, $data)) {
-                if (false === $assertion->validate($data[$key])) {
+                if (!$assertion->validate($data[$key])) {
                     $result->error($key, $assertion->message());
                 }
-            } elseif (is_string($message = $this->required[$key])) {
+            } elseif (false !== ($message = $this->required[$key])) {
                 $result->error($key, $message);
             }
         }
