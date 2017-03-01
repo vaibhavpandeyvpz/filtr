@@ -77,18 +77,26 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result->valid());
         $result = $v->validate(array('subject' => '127.0.0.1'));
         $this->assertFalse($result->valid());
-        // isNull
-        $v->key('subject')->isNull();
-        $result = $v->validate(array('subject' => null));
+    }
+
+    public function testDotNotation()
+    {
+        // Named Key
+        $v = new Validator();
+        $v->required('post.title')->isNotBlank()->isHavingLength(8, 128);
+        $result = $v->validate(array('post' => array('title' => 'Post Title')));
         $this->assertTrue($result->valid());
-        $result = $v->validate(array('subject' => 'null'));
-        $this->assertFalse($result->valid());
-        // isNotNull
-        $v->key('subject')->isNotNull();
-        $result = $v->validate(array('subject' => 'null'));
+        // Numeric Key
+        $v = new Validator();
+        $v->required('post.0.title')->isNotBlank()->isHavingLength(8, 128);
+        $v->required('post.1.title')->isNotBlank()->isHavingLength(8, 128);
+        $result = $v->validate(array(
+            'post' => array(
+                array('title' => 'Post Title #1'),
+                array('title' => 'Post Title #2'),
+            ),
+        ));
         $this->assertTrue($result->valid());
-        $result = $v->validate(array('subject' => null));
-        $this->assertFalse($result->valid());
     }
 
     /**

@@ -203,14 +203,6 @@ class Builder extends Rule
     }
 
     /**
-     * @return static
-     */
-    public function isNotNull()
-    {
-        return $this->isNotSameAs(null);
-    }
-
-    /**
      * @param mixed $value
      * @return static
      */
@@ -218,14 +210,6 @@ class Builder extends Rule
     {
         $this->rules[] = new NotSameAs($value);
         return $this;
-    }
-
-    /**
-     * @return static
-     */
-    public function isNull()
-    {
-        return $this->isSameAs(null);
     }
 
     /**

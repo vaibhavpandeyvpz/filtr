@@ -30,17 +30,23 @@ class Validator implements ValidatorInterface
     protected $required = array();
 
     /**
-     * @var bool
+     * @param array $haystack
+     * @param string $needle
+     * @return mixed
      */
-    protected $strict;
-
-    /**
-     * Validator constructor.
-     * @param bool $strict
-     */
-    public function __construct($strict = true)
+    protected static function fetch(array $haystack, $needle)
     {
-        $this->strict = $strict;
+        if (isset($haystack[$needle])) {
+            return $haystack[$needle];
+        }
+        foreach (explode('.', $needle) as $segment) {
+            if (is_array($haystack) && array_key_exists($segment, $haystack)) {
+                $haystack = $haystack[$segment];
+                continue;
+            }
+            return null;
+        }
+        return $haystack;
     }
 
     /**
@@ -69,21 +75,13 @@ class Validator implements ValidatorInterface
     {
         $data = (array)$data;
         $result = new Result();
-        if ($this->strict) {
-            $extras = array_diff_key($data, array_flip(array_keys($this->assertions)));
-            if (!empty($extras)) {
-                foreach ($extras as $key => $value) {
-                    $result->error($key, $message);
-                }
-            }
-        }
         /**
          * @var string $key
          * @var RuleInterface $assertion
          */
         foreach ($this->assertions as $key => $assertion) {
-            if (array_key_exists($key, $data)) {
-                if (!$assertion->validate($data[$key])) {
+            if (null !== ($value = self::fetch($data, $key))) {
+                if (!$assertion->validate($value)) {
                     $result->error($key, $assertion->message());
                 }
             } elseif (false !== ($message = $this->required[$key])) {
