@@ -72,7 +72,7 @@ class Validator implements ValidatorInterface
         if ($this->strict) {
             $extras = array_diff_key($data, array_flip(array_keys($this->assertions)));
             if (!empty($extras)) {
-                foreach ($extras as $key) {
+                foreach ($extras as $key => $value) {
                     $result->error($key, $message);
                 }
             }
